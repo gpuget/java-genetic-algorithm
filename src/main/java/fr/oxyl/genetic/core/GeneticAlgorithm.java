@@ -27,8 +27,8 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
     this.mutator = mutator;
   }
 
-  public static <U extends Individual<U>> GeneticAlgorithm.Builder<U> builder(PopulationGenerator<U> generator) {
-    return new Builder<>(generator);
+  public static <U extends Individual<U>> GeneticAlgorithm.Builder<U> builder() {
+    return new Builder<>();
   }
 
   @Override
@@ -36,6 +36,11 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
     long start = System.currentTimeMillis();
 
     var population = this.generator.generate(this.parameters.populationSize());
+    if (population.isEmpty()) {
+      System.err.println("No individual has been generated: abort");
+      return;
+    }
+
     int generation = 0;
     while (generation < this.parameters.generationLimit()) {
       var evaluated = this.evaluator.evaluate(population);
@@ -102,15 +107,11 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
   public static final class Builder<T extends Individual<T>> {
 
     private Parameters parameters = Parameters.builder().build();
-    private final PopulationGenerator<T> generator;
+    private PopulationGenerator<T> generator = PopulationGenerator.empty();
     private PopulationEvaluator<T> evaluator = new NaturalPopulationEvaluator<>();
     private PopulationSelection<T> selector = ElitismPopulationSelector.create(0.1F);
     private Crossover<T> crossover = ProbabilityCrossover.create(1F);
     private Mutator<T> mutator = ProbabilityMutator.create(0.1F);
-
-    public Builder(PopulationGenerator<T> generator) {
-      this.generator = generator;
-    }
 
     public GeneticAlgorithm<T> build() {
       return new GeneticAlgorithm<>(
@@ -136,6 +137,11 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
         mutator(ProbabilityMutator.create(parameters.mutationProbability()));
       }
 
+      return this;
+    }
+
+    public Builder<T> generator(PopulationGenerator<T> generator) {
+      this.generator = generator;
       return this;
     }
 
