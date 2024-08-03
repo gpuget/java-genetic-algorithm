@@ -1,8 +1,8 @@
-package fr.oxyl.genetic.application;
+package fr.oxyl.genetic;
 
+import fr.oxyl.genetic.api.GeneticAlgorithm;
+import fr.oxyl.genetic.api.GeneticAlgorithm.Parameters;
 import fr.oxyl.genetic.core.ElitismPopulationSelector;
-import fr.oxyl.genetic.core.GeneticAlgorithm;
-import fr.oxyl.genetic.core.GeneticAlgorithm.Parameters;
 import fr.oxyl.genetic.core.showtimes.RandomShowtimeIndividualGenerator;
 import fr.oxyl.genetic.core.showtimes.ShowtimeIndividual;
 
