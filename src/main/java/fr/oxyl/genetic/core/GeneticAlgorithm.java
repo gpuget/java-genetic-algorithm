@@ -10,17 +10,16 @@ import java.util.LinkedList;
 
 public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
 
-  private static final int MAX_ITERATION_COUNT = 10_000;
-  private static final int POPULATION_SIZE = 1_000;
-
+  private final Parameters parameters;
   private final PopulationGenerator<T> generator;
   private final PopulationEvaluator<T> evaluator;
   private final PopulationSelection<T> selector;
   private final Crossover<T> crossover;
   private final Mutator<T> mutator;
 
-  private GeneticAlgorithm(PopulationGenerator<T> generator, PopulationEvaluator<T> evaluator,
+  private GeneticAlgorithm(Parameters parameters, PopulationGenerator<T> generator, PopulationEvaluator<T> evaluator,
       PopulationSelection<T> selector, Crossover<T> crossover, Mutator<T> mutator) {
+    this.parameters = parameters;
     this.generator = generator;
     this.evaluator = evaluator;
     this.selector = selector;
@@ -36,9 +35,9 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
   public void run() {
     long start = System.currentTimeMillis();
 
-    var population = this.generator.generate(POPULATION_SIZE);
+    var population = this.generator.generate(this.parameters.populationSize());
     int generation = 0;
-    while (generation < MAX_ITERATION_COUNT) {
+    while (generation < this.parameters.generationLimit()) {
       var evaluated = this.evaluator.evaluate(population);
 
       var selection = this.selector.select(evaluated);
@@ -57,8 +56,52 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
     System.out.println("Best individual: " + evaluated.getFirst());
   }
 
+  public static class Parameters {
+
+    private final int populationSize;
+    private final int generationLimit;
+    private Float elitismRate;
+    private Float crossoverProbability;
+    private Float mutationProbability;
+
+    protected Parameters(int populationSize, int generationLimit, Float elitismRate, Float crossoverProbability,
+        Float mutationProbability) {
+      this.populationSize = populationSize;
+      this.generationLimit = generationLimit;
+      this.elitismRate = elitismRate;
+      this.crossoverProbability = crossoverProbability;
+      this.mutationProbability = mutationProbability;
+    }
+
+    public static ParametersBuilder builder() {
+      return new ParametersBuilder();
+    }
+
+    public int populationSize() {
+      return this.populationSize;
+    }
+
+    public int generationLimit() {
+      return this.generationLimit;
+    }
+
+    public Float elitismRate() {
+      return this.elitismRate;
+    }
+
+    public Float crossoverProbability() {
+      return this.crossoverProbability;
+    }
+
+    public Float mutationProbability() {
+      return this.mutationProbability;
+    }
+
+  }
+
   public static final class Builder<T extends Individual<T>> {
 
+    private Parameters parameters = Parameters.builder().build();
     private final PopulationGenerator<T> generator;
     private PopulationEvaluator<T> evaluator = new NaturalPopulationEvaluator<>();
     private PopulationSelection<T> selector = ElitismPopulationSelector.create(0.1F);
@@ -71,12 +114,29 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
 
     public GeneticAlgorithm<T> build() {
       return new GeneticAlgorithm<>(
+          this.parameters,
           this.generator,
           this.evaluator,
           this.selector,
           this.crossover,
           this.mutator
       );
+    }
+
+    public Builder<T> parameters(Parameters parameters) {
+      this.parameters = parameters;
+
+      if (parameters.elitismRate() != null) {
+        selector(ElitismPopulationSelector.create(parameters.elitismRate()));
+      }
+      if (parameters.mutationProbability() != null) {
+        crossover(ProbabilityCrossover.create(parameters.mutationProbability()));
+      }
+      if (parameters.mutationProbability() != null) {
+        mutator(ProbabilityMutator.create(parameters.mutationProbability()));
+      }
+
+      return this;
     }
 
     public Builder<T> evaluator(PopulationEvaluator<T> evaluator) {
@@ -98,6 +158,51 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
       this.mutator = mutator;
       return this;
     }
+  }
+
+  public static class ParametersBuilder {
+
+    private int populationSize = 1000;
+    private int generationLimit = 1000;
+    private Float elitismRate;
+    private Float crossoverProbability;
+    private Float mutationProbability;
+
+    public Parameters build() {
+      return new Parameters(
+          this.populationSize,
+          this.generationLimit,
+          this.elitismRate,
+          this.crossoverProbability,
+          this.mutationProbability
+      );
+    }
+
+    public ParametersBuilder populationSize(int populationSize) {
+      this.populationSize = populationSize;
+      return this;
+    }
+
+    public ParametersBuilder generationLimit(int generationLimit) {
+      this.generationLimit = generationLimit;
+      return this;
+    }
+
+    public ParametersBuilder elitismRate(Float elitismRate) {
+      this.elitismRate = elitismRate;
+      return this;
+    }
+
+    public ParametersBuilder crossoverProbability(Float crossoverProbability) {
+      this.crossoverProbability = crossoverProbability;
+      return this;
+    }
+
+    public ParametersBuilder mutationProbability(Float mutationProbability) {
+      this.mutationProbability = mutationProbability;
+      return this;
+    }
+
   }
 
 }
