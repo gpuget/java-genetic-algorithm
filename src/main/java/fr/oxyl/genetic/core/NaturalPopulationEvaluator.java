@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NaturalPopulationEvaluator<T extends Individual> implements PopulationEvaluator<T> {
+public class NaturalPopulationEvaluator<T extends Individual<T>> implements PopulationEvaluator<T> {
 
   @Override
   public List<T> evaluate(List<T> individuals) {
