@@ -11,12 +11,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class GeneticAlgorithmImplTest {
+class GeneticAlgorithmTest {
 
   @Mock
   private PopulationGenerator<?> populationGenerator;
   @InjectMocks
-  private GeneticAlgorithmImpl<?> geneticAlgorithm;
+  private GeneticAlgorithm<?> geneticAlgorithm;
 
 
   @Test
