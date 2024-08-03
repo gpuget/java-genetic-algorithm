@@ -1,4 +1,4 @@
-package fr.oxyl;
+package fr.oxyl.genetic.application;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class App {
+public class GeneticApplication {
 
   private static final ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
 
