@@ -1,20 +1,16 @@
 package fr.oxyl.genetic.core;
 
 import fr.oxyl.genetic.api.Individual;
-import fr.oxyl.genetic.api.PopulationSelection;
+import fr.oxyl.genetic.api.PopulationSelector;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ElitismPopulationSelector<T extends Individual<T>> implements PopulationSelection<T> {
+public class ElitismPopulationSelector<T extends Individual<T>> implements PopulationSelector<T> {
 
   private final float rate;
 
-  private ElitismPopulationSelector(float rate) {
+  public ElitismPopulationSelector(float rate) {
     this.rate = rate;
-  }
-
-  public static <U extends Individual<U>> ElitismPopulationSelector<U> create(float rate) {
-    return new ElitismPopulationSelector<>(rate);
   }
 
   @Override

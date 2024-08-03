@@ -1,9 +1,16 @@
 package fr.oxyl.genetic.api;
 
-import java.util.List;
-
 public interface Mutator<T extends Individual<T>> {
 
-  List<T> mutate(List<T> individuals);
+  T mutate(T individual);
+
+  class DefaultMutator<T extends Individual<T>> implements Mutator<T> {
+
+    @Override
+    public T mutate(T individual) {
+      return individual.mutate();
+    }
+
+  }
 
 }
