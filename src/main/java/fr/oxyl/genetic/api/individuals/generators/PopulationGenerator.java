@@ -4,8 +4,8 @@ import fr.oxyl.genetic.api.individuals.Individual;
 import fr.oxyl.genetic.api.individuals.Population;
 import java.util.function.Supplier;
 
-public interface PopulationGenerator<T extends Population<U>, U extends Individual> extends Supplier<T> {
+public interface PopulationGenerator<T extends Individual> extends Supplier<Population<T>> {
 
-  Population<U> generate(int count);
+  Population<T> generate(int count);
 
 }
