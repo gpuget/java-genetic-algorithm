@@ -9,8 +9,12 @@ public class ProbabilityMutator<T extends Individual<T>> implements Mutator<T> {
 
   private final float probability;
 
-  public ProbabilityMutator(float probability) {
+  private ProbabilityMutator(float probability) {
     this.probability = probability;
+  }
+
+  public static <U extends Individual<U>> ProbabilityMutator<U> create(float probability) {
+    return new ProbabilityMutator<>(probability);
   }
 
   @Override

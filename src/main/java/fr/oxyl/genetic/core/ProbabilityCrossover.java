@@ -10,8 +10,12 @@ public class ProbabilityCrossover<T extends Individual<T>> implements Crossover<
 
   private final float probability;
 
-  public ProbabilityCrossover(float probability) {
+  private ProbabilityCrossover(float probability) {
     this.probability = probability;
+  }
+
+  public static <U extends Individual<U>> ProbabilityCrossover<U> create(float probability) {
+    return new ProbabilityCrossover<>(probability);
   }
 
   @Override

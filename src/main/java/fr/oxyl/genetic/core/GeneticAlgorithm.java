@@ -19,7 +19,7 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
   private final Crossover<T> crossover;
   private final Mutator<T> mutator;
 
-  public GeneticAlgorithm(PopulationGenerator<T> generator, PopulationEvaluator<T> evaluator,
+  private GeneticAlgorithm(PopulationGenerator<T> generator, PopulationEvaluator<T> evaluator,
       PopulationSelection<T> selector, Crossover<T> crossover, Mutator<T> mutator) {
     this.generator = generator;
     this.evaluator = evaluator;
@@ -28,12 +28,17 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
     this.mutator = mutator;
   }
 
+  public static <U extends Individual<U>> GeneticAlgorithm.Builder<U> builder(PopulationGenerator<U> generator) {
+    return new Builder<>(generator);
+  }
+
   @Override
   public void run() {
     long start = System.currentTimeMillis();
 
     var population = this.generator.generate(POPULATION_SIZE);
-    for (int iteration = 0; iteration < MAX_ITERATION_COUNT; iteration++) {
+    int generation = 0;
+    while (generation < MAX_ITERATION_COUNT) {
       var evaluated = this.evaluator.evaluate(population);
 
       var selection = this.selector.select(evaluated);
@@ -43,11 +48,56 @@ public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
       population.addAll(offsprings);
 
       population = this.mutator.mutate(population);
+      generation++;
     }
 
     var evaluated = this.evaluator.evaluate(population);
+    System.out.println("Generation count: " + generation);
     System.out.println("Execution time: " + (System.currentTimeMillis() - start));
     System.out.println("Best individual: " + evaluated.getFirst());
+  }
+
+  public static final class Builder<T extends Individual<T>> {
+
+    private final PopulationGenerator<T> generator;
+    private PopulationEvaluator<T> evaluator = new NaturalPopulationEvaluator<>();
+    private PopulationSelection<T> selector = ElitismPopulationSelector.create(0.1F);
+    private Crossover<T> crossover = ProbabilityCrossover.create(1F);
+    private Mutator<T> mutator = ProbabilityMutator.create(0.1F);
+
+    public Builder(PopulationGenerator<T> generator) {
+      this.generator = generator;
+    }
+
+    public GeneticAlgorithm<T> build() {
+      return new GeneticAlgorithm<>(
+          this.generator,
+          this.evaluator,
+          this.selector,
+          this.crossover,
+          this.mutator
+      );
+    }
+
+    public Builder<T> evaluator(PopulationEvaluator<T> evaluator) {
+      this.evaluator = evaluator;
+      return this;
+    }
+
+    public Builder<T> selector(PopulationSelection<T> selector) {
+      this.selector = selector;
+      return this;
+    }
+
+    public Builder<T> crossover(Crossover<T> crossover) {
+      this.crossover = crossover;
+      return this;
+    }
+
+    public Builder<T> mutator(Mutator<T> mutator) {
+      this.mutator = mutator;
+      return this;
+    }
   }
 
 }

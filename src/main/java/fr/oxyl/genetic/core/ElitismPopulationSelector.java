@@ -9,8 +9,12 @@ public class ElitismPopulationSelector<T extends Individual<T>> implements Popul
 
   private final float rate;
 
-  public ElitismPopulationSelector(float rate) {
+  private ElitismPopulationSelector(float rate) {
     this.rate = rate;
+  }
+
+  public static <U extends Individual<U>> ElitismPopulationSelector<U> create(float rate) {
+    return new ElitismPopulationSelector<>(rate);
   }
 
   @Override
