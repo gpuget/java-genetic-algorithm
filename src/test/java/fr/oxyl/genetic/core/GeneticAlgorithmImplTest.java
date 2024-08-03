@@ -3,7 +3,7 @@ package fr.oxyl.genetic.core;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 
-import fr.oxyl.genetic.api.individuals.generators.PopulationGenerator;
+import fr.oxyl.genetic.api.PopulationGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
