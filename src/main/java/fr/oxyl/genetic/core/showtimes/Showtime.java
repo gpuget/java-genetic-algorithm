@@ -7,11 +7,11 @@ public record Showtime(LocalDateTime time, Movie movie) {
 
   private static final int DURATION_EXTENSION_IN_MINUTES = 15;
 
-  private Duration duration() {
+  public Duration duration() {
     return movie.duration().plus(Duration.ofMinutes(DURATION_EXTENSION_IN_MINUTES));
   }
 
-  private LocalDateTime end() {
+  public LocalDateTime end() {
     return this.time.plus(duration());
   }
 

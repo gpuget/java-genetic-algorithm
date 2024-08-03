@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 public class GeneticAlgorithm<T extends Individual<T>> implements Runnable {
 
-  private static final int MAX_ITERATION_COUNT = 1_000;
+  private static final int MAX_ITERATION_COUNT = 10_000;
   private static final int POPULATION_SIZE = 1_000;
 
   private final PopulationGenerator<T> generator;

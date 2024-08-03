@@ -5,13 +5,13 @@ import fr.oxyl.genetic.core.GeneticAlgorithm;
 import fr.oxyl.genetic.core.NaturalPopulationEvaluator;
 import fr.oxyl.genetic.core.ProbabilityCrossover;
 import fr.oxyl.genetic.core.ProbabilityMutator;
-import fr.oxyl.genetic.core.bytes.RandomBytesIndividualGenerator;
+import fr.oxyl.genetic.core.showtimes.RandomShowtimeIndividualGenerator;
 
 public class GeneticApplication {
 
   public static void main(String[] args) {
     var runnable = new GeneticAlgorithm<>(
-        new RandomBytesIndividualGenerator(),
+        new RandomShowtimeIndividualGenerator(),
         new NaturalPopulationEvaluator<>(),
         new ElitismPopulationSelector<>(0.1F),
         new ProbabilityCrossover<>(1.0F),
