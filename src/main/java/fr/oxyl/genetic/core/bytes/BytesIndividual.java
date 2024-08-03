@@ -15,7 +15,7 @@ public record BytesIndividual(byte genes, int fitness) implements Individual<Byt
     int fitness = 0;
     int value = genes & 0xFF;
     for (int i = 0; i < 8; i++) {
-      if ((value & 0x01) == 0) {
+      if ((value & 0x01) == 1) {
         fitness++;
       }
       value >>= 1;
@@ -38,8 +38,8 @@ public record BytesIndividual(byte genes, int fitness) implements Individual<Byt
   @Override
   public BytesIndividual mutate() {
     var random = ThreadLocalRandom.current();
-    int gene = random.nextInt(0, 9);
-    byte genes = (byte) ((this.genes & 0xFF) ^ gene);
+    int gene = random.nextInt(0, 5);
+    byte genes = (byte) ((this.genes & 0xFF) ^ (int) (Math.pow(2, gene)));
     return new BytesIndividual(genes);
   }
 

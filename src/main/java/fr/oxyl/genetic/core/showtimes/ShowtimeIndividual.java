@@ -40,7 +40,7 @@ public record ShowtimeIndividual(List<Showtime> showtimes, int fitness) implemen
       }
 
       fitness += (int) current.movie().duration().toMinutes();
-      fitness -= (int) Duration.between(current.time().plus(current.duration()), next.time()).toMinutes();
+      fitness -= (int) Duration.between(current.end(), next.time()).toMinutes();
       movies.add(current.movie());
       if (i == showtimes.size() - 2) {
         if (movies.contains(next.movie())) {

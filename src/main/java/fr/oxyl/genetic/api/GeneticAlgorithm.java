@@ -108,8 +108,8 @@ public class GeneticAlgorithm<T extends Individual<T>> {
 
     protected Parameters(int populationSize, int generationLimit, int fitnessTarget, float crossoverProbability,
         float mutationProbability) {
-      this.populationSize = populationSize;
-      this.generationLimit = generationLimit;
+      this.populationSize = Math.max(populationSize, 0);
+      this.generationLimit = Math.max(generationLimit, 0);
       this.fitnessTarget = fitnessTarget;
       this.crossoverProbability = Math.min(crossoverProbability, 1F);
       this.mutationProbability = Math.min(mutationProbability, 1F);
