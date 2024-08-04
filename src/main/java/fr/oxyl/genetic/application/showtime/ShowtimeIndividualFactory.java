@@ -21,16 +21,16 @@ public interface ShowtimeIndividualFactory {
         .toList());
   }
 
-  static ShowtimeIndividual createRandomShowtimeIndividual() {
-    return createRandomShowtimeIndividual(RandomShowtimeFactory.createShowtimes());
-  }
-
   static FitnessCalculator<ShowtimeIndividual> showtimePlannerFitnessCalculator() {
     return new ShowtimePlannerFitnessCalculator();
   }
 
   static CrossoverStrategy<ShowtimeIndividual> singlePointCrossover() {
     return CrossoverStrategies.singlePointCrossoverStrategy(new ListRecombiner<>(), ShowtimeIndividual::new);
+  }
+
+  static CrossoverStrategy<ShowtimeIndividual> showtimePlannerCrossoverStrategy() {
+    return new ShowtimePlannerCrossoverStrategy();
   }
 
   static MutationStrategy<ShowtimeIndividual> removeShowtimeMutation() {

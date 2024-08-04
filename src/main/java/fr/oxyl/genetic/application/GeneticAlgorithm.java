@@ -99,10 +99,6 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
         .toList();
   }
 
-  public void execute() {
-    execute(Parameters.DEFAULT);
-  }
-
   public static class Builder<T extends Individual<?>> {
 
     private final IndividualFactory<T> individualFactory;

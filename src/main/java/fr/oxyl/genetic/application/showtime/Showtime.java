@@ -1,9 +1,9 @@
 package fr.oxyl.genetic.application.showtime;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-public record Showtime(LocalDateTime time, Movie movie) {
+public record Showtime(LocalTime time, Movie movie) {
 
   private static final int DURATION_EXTENSION_IN_MINUTES = 15;
 
@@ -11,7 +11,7 @@ public record Showtime(LocalDateTime time, Movie movie) {
     return movie.duration().plus(Duration.ofMinutes(DURATION_EXTENSION_IN_MINUTES));
   }
 
-  public LocalDateTime end() {
+  public LocalTime end() {
     return this.time.plus(duration());
   }
 

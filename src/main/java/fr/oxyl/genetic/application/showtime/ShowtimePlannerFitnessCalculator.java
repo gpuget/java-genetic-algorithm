@@ -19,10 +19,6 @@ public final class ShowtimePlannerFitnessCalculator implements FitnessCalculator
         return 0;
       }
 
-      if (!current.time().toLocalDate().isEqual(next.time().toLocalDate())) {
-        return 0;
-      }
-
       if (current.time().isAfter(next.time())) {
         return 0;
       }

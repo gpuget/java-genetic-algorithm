@@ -19,7 +19,7 @@ public class ShowtimeIndividual extends ListIndividual<Showtime> {
   public String toString() {
     return showtimes().stream()
         .map(Showtime::toString)
-        .collect(Collectors.joining("\n\t", Duration.ofMinutes(fitness()) + " \n\t", "\n"));
+        .collect(Collectors.joining("\n\t", fitness() + " " + Duration.ofMinutes(fitness()) + " \n\t", "\n"));
   }
 
 }
