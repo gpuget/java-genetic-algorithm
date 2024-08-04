@@ -22,7 +22,7 @@ public final class TwoPointsCrossoverStrategy<T, U extends Individual<T>> extend
     int index2;
     do {
       index2 = random.nextInt(0, min);
-    } while (index2 == index1);
+    } while (index2 == index1 && min > 1);
     int[] indexes = new int[]{ index1, index2 };
     Arrays.sort(indexes);
 

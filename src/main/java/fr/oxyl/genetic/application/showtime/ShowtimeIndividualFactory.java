@@ -25,19 +25,23 @@ public interface ShowtimeIndividualFactory {
     return new ShowtimePlannerFitnessCalculator();
   }
 
-  static CrossoverStrategy<ShowtimeIndividual> singlePointCrossover() {
+  static CrossoverStrategy<ShowtimeIndividual> singlePointCrossoverStrategy() {
     return CrossoverStrategies.singlePointCrossoverStrategy(new ListRecombiner<>(), ShowtimeIndividual::new);
+  }
+
+  static CrossoverStrategy<ShowtimeIndividual> twoPointsCrossoverStrategy() {
+    return CrossoverStrategies.twoPointsCrossoverStrategy(new ListRecombiner<>(), ShowtimeIndividual::new);
   }
 
   static CrossoverStrategy<ShowtimeIndividual> showtimePlannerCrossoverStrategy() {
     return new ShowtimePlannerCrossoverStrategy();
   }
 
-  static MutationStrategy<ShowtimeIndividual> removeShowtimeMutation() {
+  static MutationStrategy<ShowtimeIndividual> removeListMutationStrategy() {
     return MutationStrategies.removeListMutationStrategy(ShowtimeIndividual::new);
   }
 
-  static MutationStrategy<ShowtimeIndividual> swapShowtimeMutation() {
+  static MutationStrategy<ShowtimeIndividual> swapListMutationStrategy() {
     return MutationStrategies.swapListMutationStrategy(ShowtimeIndividual::new);
   }
 

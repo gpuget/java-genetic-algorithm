@@ -16,27 +16,26 @@ public final class ShowtimePlannerFitnessCalculator implements FitnessCalculator
       var next = individual.genome().get(i + 1);
 
       if (movies.contains(current.movie())) {
-        return 0;
+        return Integer.MIN_VALUE;
       }
 
       if (current.time().isAfter(next.time())) {
-        return 0;
+        return Integer.MIN_VALUE;
       }
 
       if (next.time().isBefore(current.end())) {
-        return 0;
+        return Integer.MIN_VALUE;
       }
 
       fitness += (int) current.movie().duration().toMinutes();
       fitness -= (int) Duration.between(current.end(), next.time()).toMinutes();
       movies.add(current.movie());
-      if (i == individual.genome().size() - 2) {
-        if (movies.contains(next.movie())) {
-          return 0;
-        }
-        fitness += (int) next.movie().duration().toMinutes();
-      }
     }
+    var last = individual.genome().getLast();
+    if (movies.contains(last.movie())) {
+      return Integer.MIN_VALUE;
+    }
+    fitness += (int) last.movie().duration().toMinutes();
 
     return fitness;
   }

@@ -9,17 +9,16 @@ public class GeneticAlgorithmApplication {
 
   public static void main(String[] args) {
     var showtimes = ShowtimeFileReader.read("showtimes.txt");
-    System.out.println(showtimes);
     var algorithm = GeneticAlgorithm.builder(() -> ShowtimeIndividualFactory.createRandomShowtimeIndividual(showtimes))
         .fitnessCalculator(ShowtimeIndividualFactory.showtimePlannerFitnessCalculator())
         .selectionStrategy(SelectionStrategies.elitism(0.1F))
         .crossoverStrategy(ShowtimeIndividualFactory.showtimePlannerCrossoverStrategy())
-        .mutationStrategy(ShowtimeIndividualFactory.swapShowtimeMutation())
+        .mutationStrategy(ShowtimeIndividualFactory.swapListMutationStrategy())
         .build();
 
     var parameters = Parameters.builder()
-        .populationSize(10000)
-        .generationLimit(100)
+        .populationSize(1000)
+        .generationLimit(1000)
         .build();
 
     algorithm.execute(parameters);

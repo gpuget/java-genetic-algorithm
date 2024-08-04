@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class ShowtimeIndividual extends ListIndividual<Showtime> {
 
-  protected ShowtimeIndividual(List<Showtime> genome) {
+  public ShowtimeIndividual(List<Showtime> genome) {
     super(genome);
   }
 
