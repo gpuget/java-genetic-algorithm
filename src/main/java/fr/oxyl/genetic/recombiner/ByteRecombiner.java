@@ -5,7 +5,7 @@ import fr.oxyl.genetic.core.ByteUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ByteRecombiner implements Recombiner<Byte> {
+public final class ByteRecombiner implements Recombiner<Byte> {
 
   @Override
   public List<Byte> cut(Byte genome, int[] indexes) {
