@@ -6,24 +6,20 @@ import fr.oxyl.genetic.api.MutationStrategy;
 import fr.oxyl.genetic.core.ByteIndividual;
 import fr.oxyl.genetic.crossover.CrossoverStrategies;
 import fr.oxyl.genetic.fitness.BitCountCalculator;
-import fr.oxyl.genetic.mutation.RandomBitMutationStrategy;
+import fr.oxyl.genetic.mutation.MutationStrategies;
 import fr.oxyl.genetic.recombiner.ByteRecombiner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public interface ByteIndividualFactory {
 
-  static ByteIndividual randomIndividual() {
+  static ByteIndividual createRandomIndividual() {
     byte[] bytes = new byte[1];
     ThreadLocalRandom.current().nextBytes(bytes);
     return new ByteIndividual(bytes[0]);
   }
 
-  static FitnessCalculator<ByteIndividual> countBitZeroCalculator() {
-    return new BitCountCalculator<>((byte) 0x00);
-  }
-
-  static FitnessCalculator<ByteIndividual> countBitOneCalculator() {
-    return new BitCountCalculator<>((byte) 0x01);
+  static FitnessCalculator<ByteIndividual> countBitCalculator(int b) {
+    return new BitCountCalculator<>((byte) b);
   }
 
   static CrossoverStrategy<ByteIndividual> singlePointCrossover() {
@@ -35,7 +31,7 @@ public interface ByteIndividualFactory {
   }
 
   static MutationStrategy<ByteIndividual> randomBitMutation() {
-    return new RandomBitMutationStrategy<>(ByteIndividual::new);
+    return MutationStrategies.randomBitMutationStrategy(ByteIndividual::new);
   }
 
 }

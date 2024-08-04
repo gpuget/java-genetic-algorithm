@@ -9,7 +9,7 @@ public final class ElitismSelectionStrategy<T extends Individual<?>> implements 
 
   private final float rate;
 
-  public ElitismSelectionStrategy(float rate) {
+  ElitismSelectionStrategy(float rate) {
     this.rate = Math.min(rate, 1F);
   }
 

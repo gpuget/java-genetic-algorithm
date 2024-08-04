@@ -9,7 +9,7 @@ public final class RandomBitMutationStrategy<U extends Individual<Byte>> impleme
 
   private final Function<Byte, U> factory;
 
-  public RandomBitMutationStrategy(Function<Byte, U> factory) {
+  RandomBitMutationStrategy(Function<Byte, U> factory) {
     this.factory = factory;
   }
 

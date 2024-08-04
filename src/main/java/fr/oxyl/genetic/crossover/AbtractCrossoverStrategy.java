@@ -12,7 +12,7 @@ public abstract class AbtractCrossoverStrategy<T, U extends Individual<T>> imple
   protected final Recombiner<T> recombiner;
   private final Function<T, U> factory;
 
-  public AbtractCrossoverStrategy(Recombiner<T> recombiner, Function<T, U> factory) {
+  protected AbtractCrossoverStrategy(Recombiner<T> recombiner, Function<T, U> factory) {
     this.recombiner = recombiner;
     this.factory = factory;
   }
