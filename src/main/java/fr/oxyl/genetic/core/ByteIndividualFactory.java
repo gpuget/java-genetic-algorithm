@@ -1,9 +1,8 @@
-package fr.oxyl.genetic.factory;
+package fr.oxyl.genetic.core;
 
 import fr.oxyl.genetic.api.CrossoverStrategy;
 import fr.oxyl.genetic.api.FitnessCalculator;
 import fr.oxyl.genetic.api.MutationStrategy;
-import fr.oxyl.genetic.core.ByteIndividual;
 import fr.oxyl.genetic.crossover.CrossoverStrategies;
 import fr.oxyl.genetic.fitness.BitCountCalculator;
 import fr.oxyl.genetic.mutation.MutationStrategies;

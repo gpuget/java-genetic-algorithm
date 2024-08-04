@@ -4,7 +4,7 @@ import fr.oxyl.genetic.api.Recombiner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListRecombiner<T> implements Recombiner<List<T>> {
+public final class ListRecombiner<T> implements Recombiner<List<T>> {
 
   @Override
   public List<List<T>> cut(List<T> genome, int[] indexes) {

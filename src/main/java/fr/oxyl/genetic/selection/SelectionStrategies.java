@@ -9,4 +9,16 @@ public interface SelectionStrategies {
     return new ElitismSelectionStrategy<>(rate);
   }
 
+  static <U extends Individual<?>> SelectionStrategy<U> rouletteWheel() {
+    throw new UnsupportedOperationException();
+  }
+
+  static <U extends Individual<?>> SelectionStrategy<U> tournament() {
+    throw new UnsupportedOperationException();
+  }
+
+  static <U extends Individual<?>> SelectionStrategy<U> rank() {
+    throw new UnsupportedOperationException();
+  }
+
 }

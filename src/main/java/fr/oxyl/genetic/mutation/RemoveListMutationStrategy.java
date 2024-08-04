@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
-public class RemoveListMutationStrategy<T, U extends ListIndividual<T>> implements MutationStrategy<U> {
+public final class RemoveListMutationStrategy<T, U extends ListIndividual<T>> implements MutationStrategy<U> {
 
   private final Function<List<T>, U> factory;
 
