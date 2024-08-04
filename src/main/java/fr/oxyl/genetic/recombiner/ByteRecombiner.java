@@ -1,7 +1,6 @@
 package fr.oxyl.genetic.recombiner;
 
 import fr.oxyl.genetic.api.Recombiner;
-import fr.oxyl.genetic.core.ByteUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,18 +8,20 @@ public final class ByteRecombiner implements Recombiner<Byte> {
 
   @Override
   public List<Byte> cut(Byte genome, int[] indexes) {
-    String binaryString = ByteUtils.toString(genome);
-    List<String> segments = new ArrayList<>(indexes.length + 1);
-    int startIndex = 0;
-    for (int index : indexes) {
-      segments.add(binaryString.substring(startIndex, index + 1));
-      startIndex = index;
-    }
-    segments.add(binaryString.substring(startIndex));
+    var result = new ArrayList<Byte>(indexes.length + 1);
 
-    return segments.stream()
-        .map(segment -> (byte) Integer.parseInt(segment, 2))
-        .toList();
+    int mask;
+    int previousIndex = 0;
+    for (int index : indexes) {
+      mask = 0xFF >> (Byte.SIZE - (index - previousIndex));
+      mask = mask << Byte.SIZE - index;
+      previousIndex = index;
+      result.add((byte) (genome & mask));
+    }
+    mask = 0xFF >> previousIndex;
+    result.add((byte) (genome & mask));
+
+    return result;
   }
 
   @Override

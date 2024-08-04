@@ -42,6 +42,9 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
     Optional<T> best;
     do {
       best = population.computeFitness(this.fitnessCalculator);
+      if (best.isPresent() && best.get().fitness() >= parameters.fitnessTarget()) {
+        break;
+      }
 
       var selection = this.selectionStrategy.select(population.individuals());
       var offsprings = crossover(parameters.crossoverProbability(), parameters.populationSize(), selection);
@@ -49,12 +52,13 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
 
       population = Population.create(mutants);
       generation++;
-    } while (generation < parameters.generationLimit() && best.get().fitness() < parameters.fitnessTarget());
+    } while (generation < parameters.generationLimit());
     best = population.computeFitness(this.fitnessCalculator);
 
     System.out.println("Generation count: " + generation);
     System.out.println("Execution time: " + (System.currentTimeMillis() - startTime));
-    System.out.println("Best individual: " + best.get());
+    best.ifPresentOrElse(value -> System.out.println("Best individual: " + value),
+        () -> System.err.println("No individual found!"));
   }
 
   private List<T> crossover(float probability, int populationSize, List<T> individuals) {
@@ -64,7 +68,7 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
 
     var offsprings = new LinkedList<T>();
     if (individuals.size() > 1) {
-      var bestOffsprings = this.crossoverStrategy.mate(individuals.get(0), individuals.get(2));
+      var bestOffsprings = this.crossoverStrategy.mate(individuals.get(0), individuals.get(1));
       offsprings.addAll(bestOffsprings);
     }
 

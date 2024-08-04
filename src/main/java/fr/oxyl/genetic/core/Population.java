@@ -31,7 +31,9 @@ public class Population<T extends Individual<?>> {
   public Optional<T> computeFitness(FitnessCalculator<T> fitnessCalculator) {
     this.individuals.forEach(individual -> individual.setFitness(fitnessCalculator.compute(individual)));
     this.individuals.sort(Comparator.comparing(T::fitness).reversed());
-    return Optional.ofNullable(this.individuals.getFirst());
+    return this.individuals.isEmpty()
+        ? Optional.empty()
+        : Optional.of(this.individuals.getFirst());
   }
 
   public List<T> individuals() {
