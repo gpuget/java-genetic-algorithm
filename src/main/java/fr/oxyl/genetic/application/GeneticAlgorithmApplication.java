@@ -1,15 +1,20 @@
 package fr.oxyl.genetic.application;
 
+import fr.oxyl.genetic.application.GeneticAlgorithm.Parameters;
 import fr.oxyl.genetic.factory.ByteIndividualFactory;
 import fr.oxyl.genetic.fitness.ByteIndividualFitnessCalculators;
 
 public class GeneticAlgorithmApplication {
 
   public static void main(String[] args) {
-    GeneticAlgorithm.builder(ByteIndividualFactory::random)
+    var algorithm = GeneticAlgorithm.builder(ByteIndividualFactory::randomIndividual)
         .fitnessCalculator(ByteIndividualFitnessCalculators.ones())
-        .build()
-        .execute();
+        .crossoverStrategy(ByteIndividualFactory.twoPointsCrossoverStrategy())
+        .build();
+    var parameters = Parameters.builder()
+        .fitnessTarget(8)
+        .build();
+    algorithm.execute(parameters);
   }
 
 }

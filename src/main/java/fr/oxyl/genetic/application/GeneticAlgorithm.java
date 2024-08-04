@@ -64,7 +64,7 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
 
     var offsprings = new LinkedList<T>();
     if (individuals.size() > 1) {
-      var bestOffsprings = this.crossoverStrategy.mate(List.of(individuals.get(0), individuals.get(2)));
+      var bestOffsprings = this.crossoverStrategy.mate(individuals.get(0), individuals.get(2));
       offsprings.addAll(bestOffsprings);
     }
 
@@ -74,7 +74,7 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
       var parent2 = individuals.get(random.nextInt(0, individuals.size()));
 
       if (random.nextFloat() < probability) {
-        offsprings.addAll(this.crossoverStrategy.mate(List.of(parent1, parent2)));
+        offsprings.addAll(this.crossoverStrategy.mate(parent1, parent2));
       } else {
         offsprings.add(parent1);
         offsprings.add(parent2);
@@ -104,7 +104,7 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
     private final IndividualFactory<T> individualFactory;
     private FitnessCalculator<T> fitnessCalculator = individual -> 0;
     private SelectionStrategy<T> selectionStrategy = individuals -> individuals;
-    private CrossoverStrategy<T> crossoverStrategy = individuals -> individuals;
+    private CrossoverStrategy<T> crossoverStrategy = List::of;
     private MutationStrategy<T> mutationStrategy = individual -> individual;
 
     private Builder(IndividualFactory<T> individualFactory) {

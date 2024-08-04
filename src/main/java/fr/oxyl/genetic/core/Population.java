@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class Population<T extends Individual> {
+public class Population<T extends Individual<?>> {
 
   private final List<T> individuals;
 
@@ -20,11 +20,11 @@ public class Population<T extends Individual> {
     this(Stream.generate(individualFactory).limit(size).toList());
   }
 
-  public static <U extends Individual> Population<U> create(List<U> individuals) {
+  public static <U extends Individual<?>> Population<U> create(List<U> individuals) {
     return new Population<>(individuals);
   }
 
-  public static <U extends Individual> Population<U> create(int size, Supplier<U> individualFactory) {
+  public static <U extends Individual<?>> Population<U> create(int size, Supplier<U> individualFactory) {
     return new Population<>(size, individualFactory);
   }
 

@@ -1,11 +1,11 @@
 package fr.oxyl.genetic.api;
 
+import fr.oxyl.genetic.core.Individual;
 import java.util.Collection;
-import java.util.List;
 
 @FunctionalInterface
-public interface CrossoverStrategy<T> {
+public interface CrossoverStrategy<T extends Individual<?>> {
 
-  Collection<T> mate(List<T> parents);
+  Collection<T> mate(T parent1, T parent2);
 
 }

@@ -21,4 +21,6 @@ public abstract class Individual<T> {
     this.fitness = fitness;
   }
 
+  public abstract int genomeSize();
+
 }
