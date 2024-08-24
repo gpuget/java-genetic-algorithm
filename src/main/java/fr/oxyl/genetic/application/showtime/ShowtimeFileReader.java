@@ -26,16 +26,19 @@ public interface ShowtimeFileReader {
 
   private static List<Showtime> createShowtimesFromString(String data) {
     return Arrays.stream(data.split("(\r?\n){2}"))
+        .filter(movieData -> !movieData.startsWith("#"))
         .flatMap(movieData -> {
           var d = movieData.split("\r?\n");
           var title = d[0];
-          var durationData = d[1].split(":");
+          var durationData = d[1].replaceAll(".+\\((.+)\\)", "$1").split("[:h]");
           var hour = Integer.parseInt(durationData[0]);
           var minute = Integer.parseInt(durationData[1]);
           var duration = Duration.ofMinutes((60L * hour) + minute);
           var movie = new Movie(title, duration);
           return IntStream.range(2, d.length)
-              .mapToObj(i -> new Showtime(LocalTime.parse(d[i]), movie));
+              .mapToObj(i -> d[i])
+              .filter(timeData -> !timeData.startsWith("#"))
+              .map(timeData -> new Showtime(LocalTime.parse(timeData), movie));
         })
         .toList();
   }

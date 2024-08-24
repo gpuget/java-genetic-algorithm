@@ -9,6 +9,7 @@ public class GeneticAlgorithmApplication {
 
   public static void main(String[] args) {
     var showtimes = ShowtimeFileReader.read("showtimes.txt");
+
     var algorithm = GeneticAlgorithm.builder(() -> ShowtimeIndividualFactory.createRandomShowtimeIndividual(showtimes))
         .fitnessCalculator(ShowtimeIndividualFactory.showtimePlannerFitnessCalculator())
         .selectionStrategy(SelectionStrategies.elitism(0.1F))
@@ -17,7 +18,7 @@ public class GeneticAlgorithmApplication {
         .build();
 
     var parameters = Parameters.builder()
-        .populationSize(1000)
+        .populationSize(10000)
         .generationLimit(1000)
         .build();
 
