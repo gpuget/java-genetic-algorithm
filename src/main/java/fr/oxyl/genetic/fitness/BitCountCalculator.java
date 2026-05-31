@@ -5,23 +5,25 @@ import fr.oxyl.genetic.core.Individual;
 
 public final class BitCountCalculator<T extends Individual<Byte>> implements FitnessCalculator<T> {
 
-  private final byte value;
+  private final byte target;
 
-  public BitCountCalculator(byte value) {
-    this.value = value;
+  public BitCountCalculator(byte target) {
+    this.target = target;
   }
 
   @Override
   public int compute(T individual) {
-    int fitness = 0;
-    int value = individual.genome() & 0xFF;
-    for (int i = 0; i < 8; i++) {
-      if ((value & this.value) == 1) {
-        fitness++;
+    int matchingBits = 0;
+    int genomeBits = individual.genome() & 0xFF;
+    int targetBits = this.target & 0xFF;
+    for (int bitIndex = 0; bitIndex < Byte.SIZE; bitIndex++) {
+      if ((genomeBits & 1) == (targetBits & 1)) {
+        matchingBits++;
       }
-      value >>= 1;
+      genomeBits >>= 1;
+      targetBits >>= 1;
     }
-    return fitness;
+    return matchingBits;
   }
 
 }
