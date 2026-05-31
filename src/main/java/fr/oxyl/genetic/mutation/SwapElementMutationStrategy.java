@@ -25,7 +25,7 @@ public final class SwapElementMutationStrategy<T, U extends ListIndividual<T>> i
       int j = random.nextInt(0, individual.genome().size());
       Collections.swap(genome, i, j);
     }
-    return this.factory.apply(individual.genome());
+    return this.factory.apply(genome);
   }
 
 }
