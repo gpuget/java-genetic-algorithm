@@ -7,12 +7,12 @@ import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public abstract class AbtractCrossoverStrategy<T, U extends Individual<T>> implements CrossoverStrategy<U> {
+public abstract class AbstractCrossoverStrategy<T, U extends Individual<T>> implements CrossoverStrategy<U> {
 
   protected final Recombiner<T> recombiner;
   private final Function<T, U> factory;
 
-  protected AbtractCrossoverStrategy(Recombiner<T> recombiner, Function<T, U> factory) {
+  protected AbstractCrossoverStrategy(Recombiner<T> recombiner, Function<T, U> factory) {
     this.recombiner = recombiner;
     this.factory = factory;
   }

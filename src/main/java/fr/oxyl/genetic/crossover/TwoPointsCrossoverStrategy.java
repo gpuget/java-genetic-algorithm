@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public final class TwoPointsCrossoverStrategy<T, U extends Individual<T>> extends AbtractCrossoverStrategy<T, U> {
+public final class TwoPointsCrossoverStrategy<T, U extends Individual<T>> extends AbstractCrossoverStrategy<T, U> {
 
   TwoPointsCrossoverStrategy(Recombiner<T> recombiner,
       Function<T, U> factory) {

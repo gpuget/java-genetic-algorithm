@@ -9,6 +9,7 @@ import fr.oxyl.genetic.core.Individual;
 import fr.oxyl.genetic.core.Population;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -108,7 +109,7 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
     private MutationStrategy<T> mutationStrategy = individual -> individual;
 
     private Builder(IndividualFactory<T> individualFactory) {
-      this.individualFactory = individualFactory;
+      this.individualFactory = Objects.requireNonNull(individualFactory, "individualFactory must not be null");
     }
 
     public GeneticAlgorithm<T> build() {
@@ -122,22 +123,22 @@ public final class GeneticAlgorithm<T extends Individual<?>> {
     }
 
     public Builder<T> fitnessCalculator(FitnessCalculator<T> fitnessCalculator) {
-      this.fitnessCalculator = fitnessCalculator;
+      this.fitnessCalculator = Objects.requireNonNull(fitnessCalculator);
       return this;
     }
 
     public Builder<T> selectionStrategy(SelectionStrategy<T> selectionStrategy) {
-      this.selectionStrategy = selectionStrategy;
+      this.selectionStrategy = Objects.requireNonNull(selectionStrategy);
       return this;
     }
 
     public Builder<T> crossoverStrategy(CrossoverStrategy<T> crossoverStrategy) {
-      this.crossoverStrategy = crossoverStrategy;
+      this.crossoverStrategy = Objects.requireNonNull(crossoverStrategy);
       return this;
     }
 
     public Builder<T> mutationStrategy(MutationStrategy<T> mutationStrategy) {
-      this.mutationStrategy = mutationStrategy;
+      this.mutationStrategy = Objects.requireNonNull(mutationStrategy);
       return this;
     }
 
